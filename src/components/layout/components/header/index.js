@@ -7,7 +7,11 @@ export default function Header(){
 
     return(
         <>
-            header
+            <header className={cx('wrapper')} >
+                <div className={cx("content")}>
+                    <h2>header</h2>
+                </div>
+            </header>
         </>
     )
 }
