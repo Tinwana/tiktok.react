@@ -3,11 +3,26 @@
     margin: 0;
     padding: 0;
 }
+html{
+    font-size: 62.5%;
+}
+input,button,[tabindex]{
+    border: none;
+    outline: none;
+}
+a[href]{
+    color: var(--text-color);
+    text-decoration: none;
+}
 //Variables
 :root{
+    --primary-color: #fe2c55;
     --headerHeight: 60px;
     --primaryWidth:1150px;
     --sideBarWidth: 356px;
+    --search-background-color: rgba(22, 24, 35, 0.06);
+    --text-black-color: #000;
+    --text-color:#333;
     
 }
 
