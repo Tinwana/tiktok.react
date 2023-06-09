@@ -16,7 +16,6 @@ function App() {
             } else if (route.Layout === null) {
               Layout = Fragment;
             }
-
             return (
               <Route
                 key={index}
