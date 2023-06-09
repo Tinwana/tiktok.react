@@ -3,7 +3,10 @@ import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleXmark,
+  faEllipsis,
+  faEllipsisVertical,
   faMagnifyingGlass,
+  faPlus,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import Tippy from "@tippyjs/react/headless";
@@ -11,6 +14,7 @@ import styles from "./header.module.scss";
 import { images } from "../../../../assets/images";
 import { default as ProperWrapper } from "../../../Proper";
 import AccountItem from "../AccountItem";
+import Button from "../../../Button";
 const cx = classNames.bind(styles);
 
 export default function Header() {
@@ -23,7 +27,7 @@ export default function Header() {
             <img src={images.logo} alt="TikTok" />
           </div>
           <Tippy
-            visible
+            // visible
             interactive
             render={(attrs) => (
               <>
@@ -52,7 +56,19 @@ export default function Header() {
               </button>
             </div>
           </Tippy>
-          <div className={cx("actions")}></div>
+          <div className={cx("actions")}>
+            <Button text>
+              <FontAwesomeIcon icon={faPlus} />
+              <span> Up load</span>
+            </Button>
+            <Button primary>
+              Login
+            </Button>
+            <FontAwesomeIcon
+              icon={faEllipsisVertical}
+              className={cx("list-icon")}
+            />
+          </div>
         </div>
       </header>
     </>
