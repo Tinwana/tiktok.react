@@ -11,13 +11,16 @@ export default function Button({
   text,
   rounded,
   onClick,
+  leftIcon,
+  rightIcon,
+  className,
   children,
-  ...passProps
+  ...rest
 }) {
   let Comp = "button";
   const props = {
     onClick,
-    passProps,
+    rest,
   };
   if (to) {
     props.to = to;
@@ -29,7 +32,7 @@ export default function Button({
   return (
     <>
       <Comp
-        className={cx("wrapper", {
+        className={cx("wrapper", className, {
           primary,
           outLine,
           text,
@@ -37,7 +40,9 @@ export default function Button({
         })}
         {...props}
       >
+        {leftIcon && <span className={cx("icon")}>{leftIcon}</span>}
         {children}
+        {rightIcon && <span className={cx("icon")}>{rightIcon}</span>}
       </Comp>
     </>
   );

@@ -2,9 +2,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-}
-.text {
     min-width: 110px;
     font-size: 1.6rem;
     padding: 8px 16px;
@@ -14,21 +11,16 @@
     border-radius: 2px;
     user-select: none;
     cursor: pointer;
+    background: rgba(255, 255, 255, 1);
+}
+.text {
     border: 1px solid rgba(22, 24, 35, 0.12);
     color: var(--text-color);
-    background: rgba(255, 255, 255, 1);
 
     &:hover {
         background-color: var(--hover-color);
     }
     &.rounded {
-        min-width: 110px;
-        font-size: 1.6rem;
-        padding: 0 16px;
-        font-weight: 600;
-        line-height: 22px;
-        height: 36px;
-        margin-right: 16px;
         border-radius: 96px;
         user-select: none;
         cursor: pointer;
@@ -44,16 +36,6 @@
 }
 
 .outLine {
-    min-width: 110px;
-    font-size: 1.6rem;
-    padding: 0 16px;
-    font-weight: 600;
-    line-height: 22px;
-    height: 36px;
-    border-radius: 2px;
-    margin-right: 16px;
-    user-select: none;
-    cursor: pointer;
     background-color: transparent;
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
@@ -63,16 +45,7 @@
     }
 
     &.rounded {
-        min-width: 110px;
-        font-size: 1.6rem;
-        padding: 0 16px;
-        font-weight: 600;
-        line-height: 22px;
-        height: 36px;
         border-radius: 92px;
-        margin-right: 16px;
-        user-select: none;
-        cursor: pointer;
         background-color: transparent;
         border: 1px solid var(--primary-color);
         color: var(--primary-color);
@@ -84,16 +57,6 @@
 }
 
 .primary {
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 22px;
-    margin-right: 16px;
-    padding: 8px;
-    min-width: 100px;
-    user-select: none;
-    cursor: pointer;
-    border-radius: 4px;
-    border: none;
     color: rgba(255, 255, 255, 1);
     background-color: var(--primary-color);
 
@@ -102,16 +65,7 @@
     }
 
     &.rounded {
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 22px;
-        margin-right: 16px;
-        padding: 8px;
-        min-width: 100px;
-        user-select: none;
-        cursor: pointer;
         border-radius: 92px;
-        border: none;
         color: rgba(255, 255, 255, 1);
         background-color: var(--primary-color);
 
@@ -119,4 +73,11 @@
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
         }
     }
+}
+.icon{
+    display: inline-block;
+    line-height: 1;
+    width: 30px;
+    margin-left: -8px;
+    text-align: center;
 }

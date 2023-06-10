@@ -2,11 +2,15 @@ import { useState } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faAngleLeft,
   faCircleXmark,
+  faEarthAsia,
   faEllipsis,
   faEllipsisVertical,
+  faKeyboard,
   faMagnifyingGlass,
   faPlus,
+  faQuestion,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import Tippy from "@tippyjs/react/headless";
@@ -15,9 +19,38 @@ import { images } from "../../../../assets/images";
 import { default as ProperWrapper } from "../../../Proper";
 import AccountItem from "../AccountItem";
 import Button from "../../../Button";
+import Menu from "../../../Menu";
 const cx = classNames.bind(styles);
-
+const MENU_ITEM  = [
+  {
+      icon: <FontAwesomeIcon icon={faEarthAsia} />,
+      title: 'English',
+      children:[
+        {
+          icon: <FontAwesomeIcon icon={faAngleLeft} />,
+          title: 'Language'
+        },
+        {
+          title: 'English'
+        },
+        {
+          title: 'Vietnamese'
+        }
+      ]
+  },
+  {
+      icon: <FontAwesomeIcon icon={faQuestion} />,
+      title: 'Feedback and help',
+      to: '/feedback'
+  },
+  {
+      icon: <FontAwesomeIcon icon={faKeyboard} />,
+      title: 'Keyboard and shortcuts',
+  }
+]
 export default function Header() {
+
+  
   const [results, setResults] = useState([]);
   return (
     <>
@@ -57,17 +90,17 @@ export default function Header() {
             </div>
           </Tippy>
           <div className={cx("actions")}>
-            <Button text>
-              <FontAwesomeIcon icon={faPlus} />
+            <Button leftIcon={<FontAwesomeIcon icon={faPlus} />} text>
               <span> Up load</span>
             </Button>
-            <Button primary>
-              Login
-            </Button>
-            <FontAwesomeIcon
-              icon={faEllipsisVertical}
-              className={cx("list-icon")}
-            />
+            <Button primary>Login</Button>
+            
+              <Menu data={MENU_ITEM}>
+                <button className={cx("list-icon")}>
+                  <FontAwesomeIcon icon={faEllipsisVertical} />
+                </button>
+              </Menu>
+
           </div>
         </div>
       </header>
