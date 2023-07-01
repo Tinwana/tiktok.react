@@ -36,6 +36,7 @@
     .clear-icon,
     .loading-icon {
         position: absolute;
+        font-size: 1.6rem;
         right: calc(var(--search-button-width) + var(--search-top-spacer) * 2);
         top: 50%;
         transform: translateY(-50%);
@@ -99,6 +100,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
 
     .list-icon {
         font-size: 2.8rem;
@@ -108,4 +110,16 @@
         cursor: pointer;
         background-color: transparent;
     }
+}
+
+.action-btn{
+    background-color: transparent;
+    font-size: 2rem;
+    color: #161823;
+}
+.user-avatar{
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
 }

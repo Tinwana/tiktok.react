@@ -31,7 +31,7 @@ function Menu({ children, data = [], onChange = ()=> {} }) {
       };
       return (
         <Button
-          className={cx("menu-item")}
+          className={cx("menu-item",{separate: item.separate})}
           key={index}
           leftIcon={item.icon}
           to={item.to}
@@ -44,6 +44,9 @@ function Menu({ children, data = [], onChange = ()=> {} }) {
   };
   return (
     <Tippy
+    onHide={()=> {
+      setHistory(prev => prev.slice(0, 1))
+    }}
       interactive
       delay={[0, 700]}
       placement="bottom-end"
