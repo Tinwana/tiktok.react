@@ -2,6 +2,7 @@
     width: 100%;
     padding: 9px 16px;
     cursor: pointer;
+    display: block;
 
     &:hover{
         background-color: var(--hover-color);

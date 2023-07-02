@@ -3,10 +3,12 @@ import Home from "../pages/Home"
 import Following from "../pages/following"
 import { HeaderOnly } from "../components/layout"
 import Upload from "../pages/Upload"
+import Profile from "../components/layout/components/Profile"
 export const publicRoutes = [
-    {path:'/', component: Home},
+    {path:'/@/:nickname', component:Profile},
     {path:'/following', component:Following},
     {path:'/upload', component:Upload, Layout:HeaderOnly},
+    {path:'/', component: Home},
 
 
 ]

@@ -33,8 +33,7 @@
     position: relative;
     border: 1.5px solid transparent;
 
-    .clear-icon,
-    .loading-icon {
+    .clear-icon{
         position: absolute;
         font-size: 1.6rem;
         right: calc(var(--search-button-width) + var(--search-top-spacer) * 2);
@@ -43,7 +42,25 @@
         color: rgba(22, 24, 35, 0.34);
         cursor: pointer;
     }
-
+    .loading-icon{
+        position: absolute;
+        font-size: 1.6rem;
+        right: calc(var(--search-button-width) + var(--search-top-spacer) * 2);
+        top: 50%;
+        color: rgba(22, 24, 35, 0.34);
+        cursor: pointer;
+        animation: spinnerLoading 1s linear infinite;
+    }
+    @keyframes spinnerLoading {
+        from{
+            translate: 0 -50%;
+            rotate: 0;
+        }
+        to{
+            translate: 0 -50%;
+            rotate: 360deg;
+        }
+    }
     .search-icon {
         height: 100%;
         width: var(--search-button-width);

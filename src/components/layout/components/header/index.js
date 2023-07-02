@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,7 +17,7 @@ import {
   faSpinner,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import HeadlessTippy from "@tippyjs/react";
+import HeadlessTippy from "@tippyjs/react/headless";
 import Tippy from "@tippyjs/react";
 import styles from "./header.module.scss";
 import { images } from "../../../../assets/images";
@@ -26,6 +26,8 @@ import AccountItem from "../AccountItem";
 import Button from "../../../Button";
 import Menu from "../../../Menu";
 import "tippy.js/dist/tippy.css";
+import axios from "axios";
+import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
 const MENU_ITEM = [
   {
@@ -84,50 +86,82 @@ const userMenu = [
 ]
 export default function Header() {
   const [searchValue, setSearchValue] = useState("");
-  const [searchResults, setSearchResults] = useState([1]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [showResults, setShowResults] = useState(true);
+  const [loading , setLoading] = useState(false)
+  const searchInput = useRef()
 
   useEffect(()=>{
-
-  })
-
+    if(!searchValue) {
+      setSearchResults([])
+      return;
+    }
+    if(searchValue.startsWith(' ') && searchValue.trim) {
+      setSearchValue('')
+      return
+    };
+    setLoading(true)
+    axios.get(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
+    .then(res => {
+      setSearchResults(res.data.data);
+      setLoading(false);
+      return
+    })
+    .catch(()=> {
+      setLoading(false);
+      return
+    })
+  },[searchValue])
   const handleMenu = (menuItem) => {};
   const currentUser = true;
-  return (
+    return (
     <header className={cx("wrapper")}>
       <div className={cx("content")}>
-        <div className={cx("logo")}>
+        <Link to='/' className={cx("logo")}>
           <img src={images.logo} alt="TikTok" />
-        </div>
+        </Link>
         <HeadlessTippy
           interactive
-          visible={searchResults.length > 0}
-          delay={1000}
+          visible={searchResults.length > 0 && showResults}
           render={(attrs) => (
             <>
-              <div className={cx("search-result")}>
+              <div className={cx("search-result")} tabIndex='-1' {...attrs}>
                 <ProperWrapper>
                   <h4 className={cx("account-text")}>Accounts</h4>
-                  <AccountItem />
-                  <AccountItem />
-                  <AccountItem />
+                 {searchResults.map(result => {
+                  return(
+                    <AccountItem key={result.id} data={result} />
+                  )
+                 })}
                 </ProperWrapper>
               </div>
             </>
           )}
+          onClickOutside={()=> {
+            setShowResults(false)
+            }}
         >
           <div className={cx("search-group")}>
             <input
+              ref={searchInput}
               type="text"
               placeholder="Search account and videos!"
               value={searchValue}
               onChange={(e) => {
-                setSearchValue(e.target.value);
+                setSearchValue(e.target.value)
               }}
+              onFocus={e => setShowResults(true)}
             />
-            <button className={cx("clear-icon")}>
+           {!!searchValue && !loading && (
+            <button className={cx("clear-icon")} onClick={e => {
+              setSearchValue('');
+              setSearchResults([])
+              searchInput.current.focus()
+            }}>
               <FontAwesomeIcon icon={faCircleXmark} />
             </button>
-            <FontAwesomeIcon className={cx("loading-icon")} icon={faSpinner} />
+           )}
+            {loading && <FontAwesomeIcon className={cx("loading-icon")} icon={faSpinner} />}
             <button className={cx("search-icon")}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
