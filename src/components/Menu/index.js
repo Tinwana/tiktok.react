@@ -7,7 +7,7 @@ import HeaderMenu from "../Proper/headerMenu";
 import { useState } from "react";
 const cx = classNames.bind(styles);
 
-function Menu({ children, data = [], onChange = ()=> {} }) {
+function Menu({ children, data = [],hideOnClick = true , onChange = ()=> {} }) {
   const handleBack = (e) => {
     setHistory((prev) => {
       return prev.slice(0, prev.length - 1);
@@ -44,10 +44,12 @@ function Menu({ children, data = [], onChange = ()=> {} }) {
   };
   return (
     <Tippy
+    hideOnClick={hideOnClick}
     onHide={()=> {
       setHistory(prev => prev.slice(0, 1))
     }}
       interactive
+      // appendTo={document.body}
       delay={[0, 700]}
       placement="bottom-end"
       render={(attrs) => (

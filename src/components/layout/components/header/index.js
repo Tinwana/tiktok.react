@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useDebounce } from "../../../../hooks";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -46,6 +47,86 @@ const MENU_ITEM = [
           title: "Vietnamese",
           type: "Language",
         },
+        {
+          code: "en",
+          title: "English",
+          type: "Language",
+        },
+        {
+          code: "vi",
+          title: "Vietnamese",
+          type: "Language",
+        },
+        {
+          code: "en",
+          title: "English",
+          type: "Language",
+        },
+        {
+          code: "vi",
+          title: "Vietnamese",
+          type: "Language",
+        },
+        {
+          code: "en",
+          title: "English",
+          type: "Language",
+        },
+        {
+          code: "vi",
+          title: "Vietnamese",
+          type: "Language",
+        },
+        {
+          code: "en",
+          title: "English",
+          type: "Language",
+        },
+        {
+          code: "vi",
+          title: "Vietnamese",
+          type: "Language",
+        },
+        {
+          code: "en",
+          title: "English",
+          type: "Language",
+        },
+        {
+          code: "vi",
+          title: "Vietnamese",
+          type: "Language",
+        },
+        {
+          code: "en",
+          title: "English",
+          type: "Language",
+        },
+        {
+          code: "vi",
+          title: "Vietnamese",
+          type: "Language",
+        },
+        {
+          code: "en",
+          title: "English",
+          type: "Language",
+        },
+        {
+          code: "vi",
+          title: "Vietnamese",
+          type: "Language",
+        },
+        {
+          code: "en",
+          title: "English",
+          type: "Language",
+        },
+        {
+          code: "vi",
+          title: "Vietnamese",
+          type: "Language",
+        },
       ],
     },
   },
@@ -81,65 +162,67 @@ const userMenu = [
     icon: <FontAwesomeIcon icon={faSignOut} />,
     title: "Log out",
     to: "/log out",
-    separate : true
-  }
-]
+    separate: true,
+  },
+];
 export default function Header() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(true);
-  const [loading , setLoading] = useState(false)
-  const searchInput = useRef()
+  const [loading, setLoading] = useState(false);
+  const searchInput = useRef();
+  const debounceValue = useDebounce(searchValue, 500);
 
-  useEffect(()=>{
-    if(!searchValue) {
-      setSearchResults([])
+  useEffect(() => {
+    if (!searchValue.trim()) {
+      setSearchResults([]);
       return;
     }
-    if(searchValue.startsWith(' ') && searchValue.trim) {
-      setSearchValue('')
-      return
-    };
-    setLoading(true)
-    axios.get(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
-    .then(res => {
-      setSearchResults(res.data.data);
-      setLoading(false);
-      return
-    })
-    .catch(()=> {
-      setLoading(false);
-      return
-    })
-  },[searchValue])
+    setLoading(true);
+    axios
+      .get(`https://tiktok.fullstack.edu.vn/api/users/search`, {
+        params: {
+          q: searchValue,
+          type: "less",
+        },
+      })
+      .then((res) => {
+        setSearchResults(res.data.data);
+        setLoading(false);
+        return;
+      })
+      .catch(() => {
+        setLoading(false);
+        return;
+      });
+  }, [debounceValue]);
   const handleMenu = (menuItem) => {};
   const currentUser = true;
-    return (
+  return (
     <header className={cx("wrapper")}>
       <div className={cx("content")}>
-        <Link to='/' className={cx("logo")}>
+        <Link to="/" className={cx("logo")}>
           <img src={images.logo} alt="TikTok" />
         </Link>
         <HeadlessTippy
           interactive
+          appendTo={()=> document.body}
           visible={searchResults.length > 0 && showResults}
           render={(attrs) => (
             <>
-              <div className={cx("search-result")} tabIndex='-1' {...attrs}>
+              <div className={cx("search-result")} tabIndex="-1" {...attrs}>
                 <ProperWrapper>
                   <h4 className={cx("account-text")}>Accounts</h4>
-                 {searchResults.map(result => {
-                  return(
-                    <AccountItem key={result.id} data={result} />
-                  )
-                 })}
+                  {searchResults.map((result) => {
+                    return <AccountItem key={result.id} data={result} />;
+                  })}
                 </ProperWrapper>
               </div>
             </>
           )}
-          onClickOutside={()=> {
-            setShowResults(false)
-            }}
+          onClickOutside={() => {
+            setShowResults(false);
+          }}
         >
           <div className={cx("search-group")}>
             <input
@@ -148,21 +231,33 @@ export default function Header() {
               placeholder="Search account and videos!"
               value={searchValue}
               onChange={(e) => {
-                setSearchValue(e.target.value)
+                if (!e.target.value.startsWith(" ")) {
+                setSearchValue(e.target.value);
+                }
               }}
-              onFocus={e => setShowResults(true)}
+              onFocus={(e) => setShowResults(true)}
             />
-           {!!searchValue && !loading && (
-            <button className={cx("clear-icon")} onClick={e => {
-              setSearchValue('');
-              setSearchResults([])
-              searchInput.current.focus()
-            }}>
-              <FontAwesomeIcon icon={faCircleXmark} />
-            </button>
-           )}
-            {loading && <FontAwesomeIcon className={cx("loading-icon")} icon={faSpinner} />}
-            <button className={cx("search-icon")}>
+            {!!searchValue && !loading && (
+              <button
+                className={cx("clear-icon")}
+                onClick={(e) => {
+                  setSearchValue("");
+                  setSearchResults([]);
+                  searchInput.current.focus();
+                }}
+              >
+                <FontAwesomeIcon icon={faCircleXmark} />
+              </button>
+            )}
+            {loading && (
+              <FontAwesomeIcon
+                className={cx("loading-icon")}
+                icon={faSpinner}
+              />
+            )}
+            <button onMouseDown={e => {
+              e.preventDefault()
+            }} className={cx("search-icon")}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
           </div>
@@ -191,7 +286,7 @@ export default function Header() {
               <Button primary>Login</Button>
             </>
           )}
-          <Menu data={currentUser ? userMenu : MENU_ITEM} onChange={handleMenu}>
+          <Menu data={currentUser ? userMenu : MENU_ITEM} onChange={handleMenu} hideOnClick={false} >
             {currentUser ? (
               <img
                 className={cx("user-avatar")}

@@ -1,5 +1,8 @@
 .list-items{
     width: 227px;
+    max-height: min(100vh - 96px - 60px,734px);
+    overflow-y: auto;
+    scroll-behavior: smooth;
     
 }
 .menu-items{
