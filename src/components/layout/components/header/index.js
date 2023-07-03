@@ -204,64 +204,65 @@ export default function Header() {
         <Link to="/" className={cx("logo")}>
           <img src={images.logo} alt="TikTok" />
         </Link>
-        <HeadlessTippy
-          interactive
-          appendTo={()=> document.body}
-          visible={searchResults.length > 0 && showResults}
-          render={(attrs) => (
-            <>
-              <div className={cx("search-result")} tabIndex="-1" {...attrs}>
-                <ProperWrapper>
-                  <h4 className={cx("account-text")}>Accounts</h4>
-                  {searchResults.map((result) => {
-                    return <AccountItem key={result.id} data={result} />;
-                  })}
-                </ProperWrapper>
-              </div>
-            </>
-          )}
-          onClickOutside={() => {
-            setShowResults(false);
-          }}
-        >
-          <div className={cx("search-group")}>
-            <input
-              ref={searchInput}
-              type="text"
-              placeholder="Search account and videos!"
-              value={searchValue}
-              onChange={(e) => {
-                if (!e.target.value.startsWith(" ")) {
-                setSearchValue(e.target.value);
-                }
-              }}
-              onFocus={(e) => setShowResults(true)}
-            />
-            {!!searchValue && !loading && (
-              <button
-                className={cx("clear-icon")}
-                onClick={(e) => {
-                  setSearchValue("");
-                  setSearchResults([]);
-                  searchInput.current.focus();
+        <div>
+          <HeadlessTippy
+            interactive
+            visible={searchResults.length > 0 && showResults}
+            render={(attrs) => (
+              <>
+                <div className={cx("search-result")} tabIndex="-1" {...attrs}>
+                  <ProperWrapper>
+                    <h4 className={cx("account-text")}>Accounts</h4>
+                    {searchResults.map((result) => {
+                      return <AccountItem key={result.id} data={result} />;
+                    })}
+                  </ProperWrapper>
+                </div>
+              </>
+            )}
+            onClickOutside={() => {
+              setShowResults(false);
+            }}
+          >
+            <div className={cx("search-group")}>
+              <input
+                ref={searchInput}
+                type="text"
+                placeholder="Search account and videos!"
+                value={searchValue}
+                onChange={(e) => {
+                  if (!e.target.value.startsWith(" ")) {
+                  setSearchValue(e.target.value);
+                  }
                 }}
-              >
-                <FontAwesomeIcon icon={faCircleXmark} />
-              </button>
-            )}
-            {loading && (
-              <FontAwesomeIcon
-                className={cx("loading-icon")}
-                icon={faSpinner}
+                onFocus={(e) => setShowResults(true)}
               />
-            )}
-            <button onMouseDown={e => {
-              e.preventDefault()
-            }} className={cx("search-icon")}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
-          </div>
-        </HeadlessTippy>
+              {!!searchValue && !loading && (
+                <button
+                  className={cx("clear-icon")}
+                  onClick={(e) => {
+                    setSearchValue("");
+                    setSearchResults([]);
+                    searchInput.current.focus();
+                  }}
+                >
+                  <FontAwesomeIcon icon={faCircleXmark} />
+                </button>
+              )}
+              {loading && (
+                <FontAwesomeIcon
+                  className={cx("loading-icon")}
+                  icon={faSpinner}
+                />
+              )}
+              <button onMouseDown={e => {
+                e.preventDefault()
+              }} className={cx("search-icon")}>
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </button>
+            </div>
+          </HeadlessTippy>
+        </div>
         <div className={cx("actions")}>
           {currentUser ? (
             <>
