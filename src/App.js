@@ -1,19 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import Container from "react-bootstrap/Container";
-import { Fragment, useEffect , useState } from "react";
+import { Fragment } from "react";
 import { publicRoutes } from "./routes";
 import { DefaultLayOut } from "./components/layout";
 
 function App() {
-  const [api,setApi] = useState([])
-  useEffect(() => {
-    fetch('http://localhost:3000/course/api')
-    .then(res => res.json())
-    .then (data => {
-      setApi(data)
-    })
-  },[])
-  console.log(api);
 
   return (
     <>

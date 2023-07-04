@@ -1,7 +1,10 @@
-import classNames from "classnames/bind";
-import styles from "./HeaderMenu.module.scss";
+import { memo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+
+import styles from "./HeaderMenu.module.scss";
+
 const cx = classNames.bind(styles);
 
 function HeaderMenu({ title , onBack }) {
@@ -18,4 +21,4 @@ function HeaderMenu({ title , onBack }) {
     )
 }
 
-export default HeaderMenu;
+export default memo(HeaderMenu);

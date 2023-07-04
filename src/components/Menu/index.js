@@ -1,13 +1,19 @@
-import classNames from "classnames/bind";
+import { memo, useState } from "react";
 import Tippy from "@tippyjs/react/headless";
-import styles from "./Menu.module.scss";
+import classNames from "classnames/bind";
+
 import { default as ProperWrapper } from "../Proper";
 import Button from "../Button";
 import HeaderMenu from "../Proper/headerMenu";
-import { useState } from "react";
+import styles from "./Menu.module.scss";
 const cx = classNames.bind(styles);
 
-function Menu({ children, data = [],hideOnClick = true , onChange = ()=> {} }) {
+function Menu({
+  children,
+  data = [],
+  hideOnClick = true,
+  onChange = () => {},
+}) {
   const handleBack = (e) => {
     setHistory((prev) => {
       return prev.slice(0, prev.length - 1);
@@ -25,13 +31,13 @@ function Menu({ children, data = [],hideOnClick = true , onChange = ()=> {} }) {
           setHistory((prev) => {
             return [...prev, item.children];
           });
-        } else{
+        } else {
           onChange(item);
         }
       };
       return (
         <Button
-          className={cx("menu-item",{separate: item.separate})}
+          className={cx("menu-item", { separate: item.separate })}
           key={index}
           leftIcon={item.icon}
           to={item.to}
@@ -44,10 +50,10 @@ function Menu({ children, data = [],hideOnClick = true , onChange = ()=> {} }) {
   };
   return (
     <Tippy
-    hideOnClick={hideOnClick}
-    onHide={()=> {
-      setHistory(prev => prev.slice(0, 1))
-    }}
+      hideOnClick={hideOnClick}
+      onHide={() => {
+        setHistory((prev) => prev.slice(0, 1));
+      }}
       interactive
       // appendTo={document.body}
       delay={[0, 700]}
@@ -70,4 +76,4 @@ function Menu({ children, data = [],hideOnClick = true , onChange = ()=> {} }) {
   );
 }
 
-export default Menu;
+export default memo(Menu);

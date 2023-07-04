@@ -83,6 +83,7 @@
         padding: 14px 0;
         flex: 1;
         caret-color: var(--primary-color);
+        padding-right: 4rem;
 
         &:not(:placeholder-shown) ~ .search-icon {
             background-color: var(--search-background-color);

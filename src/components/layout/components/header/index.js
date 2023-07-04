@@ -1,6 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useDebounce } from "../../../../hooks";
-import classNames from "classnames/bind";
+import axios from "axios";
+import Tippy from "@tippyjs/react";
+import HeadlessTippy from "@tippyjs/react/headless";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleXmark,
@@ -11,24 +14,22 @@ import {
   faGear,
   faKeyboard,
   faMagnifyingGlass,
-  faMessage,
   faPlus,
   faQuestion,
   faSignOut,
   faSpinner,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import HeadlessTippy from "@tippyjs/react/headless";
-import Tippy from "@tippyjs/react";
-import styles from "./header.module.scss";
+
 import { images } from "../../../../assets/images";
 import { default as ProperWrapper } from "../../../Proper";
 import AccountItem from "../AccountItem";
 import Button from "../../../Button";
 import Menu from "../../../Menu";
+import classNames from "classnames/bind";
+import styles from "./header.module.scss";
 import "tippy.js/dist/tippy.css";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { MessageIcon } from "../../../Icon";
 const cx = classNames.bind(styles);
 const MENU_ITEM = [
   {
@@ -165,7 +166,7 @@ const userMenu = [
     separate: true,
   },
 ];
-export default function Header() {
+function Header() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(true);
@@ -174,7 +175,7 @@ export default function Header() {
   const debounceValue = useDebounce(searchValue, 500);
 
   useEffect(() => {
-    if (!searchValue.trim()) {
+    if (!debounceValue.trim()) {
       setSearchResults([]);
       return;
     }
@@ -182,7 +183,7 @@ export default function Header() {
     axios
       .get(`https://tiktok.fullstack.edu.vn/api/users/search`, {
         params: {
-          q: searchValue,
+          q: debounceValue,
           type: "less",
         },
       })
@@ -273,7 +274,7 @@ export default function Header() {
               </Tippy>
               <Tippy content="Message" placement="bottom" delay={100}>
                 <button className={cx("action-btn")}>
-                  <FontAwesomeIcon icon={faMessage} />
+                  <MessageIcon />
                 </button>
               </Tippy>
             </>
@@ -305,3 +306,4 @@ export default function Header() {
     </header>
   );
 }
+export default memo(Header)
